@@ -3,51 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: 20px auto; }
-        h1 { text-align: center; }
-        form { margin: 20px 0; }
-        input, textarea, select { width: 100%; margin: 10px 0; padding: 10px; }
-        button { cursor: pointer; }
-    </style>
+    <title>Admin Interface</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Manage Ailments and Body Zones</h1>
-
-        <form id="manage-form">
-            <input type="text" id="ailment-name" placeholder="Ailment Name" required>
-            <textarea id="ailment-description" placeholder="Ailment Description" required></textarea>
-
-            <label for="body-zone">Select Body Zone:</label>
-            <select id="body-zone" required>
-                <option value="head">Head</option>
-                <option value="chest">Chest</option>
-                <option value="abdomen">Abdomen</option>
-                <option value="limbs">Limbs</option>
-            </select>
-            
+    <h1>Admin Interface</h1>
+    <section>
+        <h2>Add/Edit Ailments</h2>
+        <form id="ailmentForm">
+            <input type="text" id="ailmentName" placeholder="Ailment Name" required>
+            <textarea id="ailmentDescription" placeholder="Description" required></textarea>
             <button type="submit">Submit</button>
         </form>
-
-        <div id="message"></div>
-    </div>
-
-    <script>
-        document.getElementById('manage-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const ailmentName = document.getElementById('ailment-name').value;
-            const ailmentDescription = document.getElementById('ailment-description').value;
-            const bodyZone = document.getElementById('body-zone').value;
-
-            // Here you would typically send the data to your backend
-            // For example:
-            // fetch('/api/ailments', { method: 'POST', body: JSON.stringify({ ailmentName, ailmentDescription, bodyZone }) });
-
-            document.getElementById('message').innerText = 'Ailment added/edited successfully!';
-        });
-    </script>
+    </section>
+    <section>
+        <h2>Add/Edit Spiritual Meanings</h2>
+        <form id="spiritualMeaningForm">
+            <input type="text" id="spiritualMeaningName" placeholder="Spiritual Meaning" required>
+            <textarea id="spiritualMeaningDescription" placeholder="Description" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
 </body>
 </html>
