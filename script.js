@@ -14,14 +14,14 @@
 
   function loadNotes() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
-    catch (_) { return {}; }
+    catch (e) { console.warn("Failed to parse saved notes:", e); return {}; }
   }
   function saveNotes(notes) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
   }
   function loadExplored() {
     try { return JSON.parse(localStorage.getItem(EXPLORED_KEY)) || []; }
-    catch (_) { return []; }
+    catch (e) { console.warn("Failed to parse explored data:", e); return []; }
   }
   function saveExplored(list) {
     localStorage.setItem(EXPLORED_KEY, JSON.stringify(list));
@@ -399,12 +399,12 @@
 
     if (twitterBtn) {
       twitterBtn.addEventListener("click", function () {
-        window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText()) + "&url=" + encodeURIComponent(shareUrl()), "_blank", "noopener");
+        window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText()) + "&url=" + encodeURIComponent(shareUrl()), "_blank", "noopener,noreferrer");
       });
     }
     if (fbBtn) {
       fbBtn.addEventListener("click", function () {
-        window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl()), "_blank", "noopener");
+        window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareUrl()), "_blank", "noopener,noreferrer");
       });
     }
     if (copyBtn) {
@@ -511,8 +511,9 @@
             if (data.notes) saveNotes(data.notes);
             if (data.explored) saveExplored(data.explored);
             refreshMyMap();
-          } catch (_) {
-            // silently ignore malformed files
+          } catch (err) {
+            console.warn("Failed to import map data:", err);
+            alert("Could not import file — the format appears to be invalid.");
           }
         };
         reader.readAsText(file);
