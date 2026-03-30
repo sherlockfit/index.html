@@ -1,63 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitruvian Man Body Oracle</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vitruvian Man Body Oracle by SherlockFit — Investigate your body's hidden wisdom through chakras, TCM, Louise Hay, Manly P. Hall, and German New Medicine.">
+  <title>Vitruvian Man Body Oracle | SherlockFit — Beyond Elementary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <img src="sherlockfit-logo.png" alt="SherlockFit" class="site-logo" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block'">
+        <span id="logo-text" class="logo-text-fallback" style="display:none">SHERLOCKFIT</span>
+      </div>
+      <div class="header-title">
         <h1>Vitruvian Man Body Oracle</h1>
-        <form id="email-capture">
-            <label for="email">Subscribe for updates:</label>
-            <input type="email" id="email" name="email" required>
-            <button type="submit">Submit</button>
-        </form>
-    </header>
+        <p class="tagline">BEYOND ELEMENTARY</p>
+      </div>
+      <nav class="header-nav">
+        <button class="nav-btn active" data-view="oracle"><i class="fas fa-map"></i> Body Map</button>
+        <button class="nav-btn" data-view="mymap"><i class="fas fa-star"></i> My Map</button>
+        <a href="admin.html" class="nav-btn"><i class="fas fa-cog"></i> Admin</a>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <section id="body-zones">
-            <h2>Clickable Body Zones</h2>
-            <div class="body-zone" data-zone="head">Head</div>
-            <div class="body-zone" data-zone="heart">Heart</div>
-            <div class="body-zone" data-zone="lungs">Lungs</div>
-            <div class="body-zone" data-zone="liver">Liver</div>
-            <div class="body-zone" data-zone="stomach">Stomach</div>
-            <div class="body-zone" data-zone="legs">Legs</div>
-            <!-- Add additional body zones here -->
+  <!-- MAIN CONTENT -->
+  <main class="oracle-main">
+    
+    <!-- BODY MAP VIEW -->
+    <div id="view-oracle" class="view active">
+      <div class="oracle-layout">
+        
+        <!-- LEFT: Body Map -->
+        <aside class="body-map-panel">
+          <div class="region-tabs">
+            <button class="region-tab active" data-region="all">All</button>
+            <button class="region-tab" data-region="head">Head</button>
+            <button class="region-tab" data-region="torso">Torso</button>
+            <button class="region-tab" data-region="arms">Arms</button>
+            <button class="region-tab" data-region="legs">Legs</button>
+            <button class="region-tab" data-region="organs">Organs</button>
+          </div>
+          
+          <div class="body-map-container" id="bodyMapContainer">
+            <img src="vitruvian-man.png" alt="Vitruvian Man — Leonardo da Vinci, c.1490" class="vitruvian-img" id="vitruvianImg">
+            
+            <!-- ZONE HOTSPOTS - positioned as percentages relative to the container -->
+            <!-- HEAD REGION -->
+            <button class="body-zone" data-zone="crown" data-region="head" style="top:3%;left:45%;" title="Crown">Crown</button>
+            <button class="body-zone" data-zone="eyes" data-region="head" style="top:8%;left:38%;" title="Eyes">Eyes</button>
+            <button class="body-zone" data-zone="thirdEye" data-region="head" style="top:7%;left:45%;" title="Third Eye">3rd Eye</button>
+            <button class="body-zone" data-zone="ears" data-region="head" style="top:9%;left:30%;" title="Ears">Ears</button>
+            <button class="body-zone" data-zone="nose" data-region="head" style="top:10%;left:51%;" title="Nose">Nose</button>
+            <button class="body-zone" data-zone="jaw" data-region="head" style="top:13%;left:45%;" title="Jaw">Jaw</button>
+            <button class="body-zone" data-zone="throat" data-region="head" style="top:16%;left:45%;" title="Throat">Throat</button>
+            <button class="body-zone" data-zone="neck" data-region="head" style="top:18%;left:37%;" title="Neck">Neck</button>
+            
+            <!-- TORSO REGION -->
+            <button class="body-zone" data-zone="shoulders" data-region="torso" style="top:22%;left:28%;" title="Shoulders">Shoulders</button>
+            <button class="body-zone" data-zone="collarbone" data-region="torso" style="top:21%;left:43%;" title="Collarbone">Collar</button>
+            <button class="body-zone" data-zone="chest" data-region="torso" style="top:25%;left:44%;" title="Chest">Chest</button>
+            <button class="body-zone" data-zone="heart" data-region="torso" style="top:27%;left:38%;" title="Heart">Heart</button>
+            <button class="body-zone" data-zone="ribcage" data-region="torso" style="top:30%;left:52%;" title="Ribcage">Ribs</button>
+            <button class="body-zone" data-zone="solarPlexus" data-region="torso" style="top:33%;left:44%;" title="Solar Plexus">Sol. Plexus</button>
+            <button class="body-zone" data-zone="back" data-region="torso" style="top:28%;left:60%;" title="Back">Back</button>
+            <button class="body-zone" data-zone="spine" data-region="torso" style="top:35%;left:55%;" title="Spine">Spine</button>
+            <button class="body-zone" data-zone="belly" data-region="torso" style="top:38%;left:44%;" title="Belly">Belly</button>
+            <button class="body-zone" data-zone="sacral" data-region="torso" style="top:42%;left:44%;" title="Sacral">Sacral</button>
+            <button class="body-zone" data-zone="pelvis" data-region="torso" style="top:45%;left:36%;" title="Pelvis">Pelvis</button>
+            
+            <!-- ARMS REGION -->
+            <button class="body-zone" data-zone="arms" data-region="arms" style="top:30%;left:20%;" title="Arms">Arms</button>
+            <button class="body-zone" data-zone="elbows" data-region="arms" style="top:37%;left:16%;" title="Elbows">Elbows</button>
+            <button class="body-zone" data-zone="wrists" data-region="arms" style="top:44%;left:13%;" title="Wrists">Wrists</button>
+            <button class="body-zone" data-zone="hands" data-region="arms" style="top:49%;left:11%;" title="Hands">Hands</button>
+            
+            <!-- LEGS REGION -->
+            <button class="body-zone" data-zone="root" data-region="legs" style="top:46%;left:44%;" title="Root">Root</button>
+            <button class="body-zone" data-zone="hips" data-region="legs" style="top:49%;left:30%;" title="Hips">Hips</button>
+            <button class="body-zone" data-zone="thighs" data-region="legs" style="top:56%;left:38%;" title="Thighs">Thighs</button>
+            <button class="body-zone" data-zone="legs" data-region="legs" style="top:62%;left:44%;" title="Legs">Legs</button>
+            <button class="body-zone" data-zone="knees" data-region="legs" style="top:67%;left:38%;" title="Knees">Knees</button>
+            <button class="body-zone" data-zone="ankles" data-region="legs" style="top:74%;left:38%;" title="Ankles">Ankles</button>
+            <button class="body-zone" data-zone="feet" data-region="legs" style="top:79%;left:37%;" title="Feet">Feet</button>
+            
+            <!-- ORGANS -->
+            <button class="body-zone" data-zone="lungs" data-region="organs" style="top:26%;left:68%;" title="Lungs">Lungs</button>
+            <button class="body-zone" data-zone="stomach" data-region="organs" style="top:35%;left:68%;" title="Stomach">Stomach</button>
+            <button class="body-zone" data-zone="liver" data-region="organs" style="top:32%;left:75%;" title="Liver">Liver</button>
+            <button class="body-zone" data-zone="kidneys" data-region="organs" style="top:38%;left:75%;" title="Kidneys">Kidneys</button>
+            <button class="body-zone" data-zone="intestines" data-region="organs" style="top:42%;left:68%;" title="Intestines">Intestines</button>
+            <button class="body-zone" data-zone="skin" data-region="organs" style="top:50%;left:75%;" title="Skin">Skin</button>
+            
+            <div class="vitruvian-caption">LEONARDO DA VINCI · VITRUVIAN MAN · C.1490 · PUBLIC DOMAIN</div>
+          </div>
+          
+          <div class="map-prompt" id="mapPrompt">
+            <i class="fas fa-search"></i>
+            <p>Select any zone to begin your investigation</p>
+            <span class="map-prompt-sub">36 zones · 5 wisdom traditions · Beyond Elementary</span>
+          </div>
+        </aside>
+        
+        <!-- RIGHT: Case File Panel -->
+        <section class="case-file-panel" id="caseFilePanel">
+          <div class="case-file-header" id="caseFileHeader">
+            <div class="case-file-placeholder">
+              <div class="placeholder-icon"><i class="fas fa-magnifying-glass"></i></div>
+              <h2>The Investigation Awaits</h2>
+              <p>Click any body zone on the map to open its case file — revealing the hidden wisdom within that region across five ancient traditions.</p>
+              <div class="wisdom-traditions">
+                <span>🔮 Chakras</span>
+                <span>🏥 TCM</span>
+                <span>💜 Louise Hay</span>
+                <span>📖 Esoteric</span>
+                <span>🧬 GNM</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="case-file-content" id="caseFileContent" style="display:none">
+            <div class="zone-title-bar">
+              <div class="zone-chakra-dot" id="zoneDot"></div>
+              <h2 id="zoneTitle">Zone Name</h2>
+              <div class="zone-actions">
+                <button class="btn-sm btn-secondary" id="addNoteBtn"><i class="fas fa-plus"></i> Case Note</button>
+                <button class="btn-sm btn-secondary" id="shareBtn"><i class="fas fa-share-alt"></i> Share</button>
+              </div>
+            </div>
+            <p class="zone-anatomy" id="zoneAnatomy"></p>
+            
+            <!-- ACCORDION SECTIONS -->
+            <div class="accordion" id="mainAccordion">
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="spiritual">
+                  <span class="acc-icon">🔮</span>
+                  <span class="acc-title">The Investigation — Spiritual Meaning</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-spiritual"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="chakra">
+                  <span class="acc-icon">🕉️</span>
+                  <span class="acc-title">Chakra Dossier</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-chakra"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="tcm">
+                  <span class="acc-icon">🏥</span>
+                  <span class="acc-title">Chinese Medicine Report</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-tcm"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="louiseHay">
+                  <span class="acc-icon">💜</span>
+                  <span class="acc-title">Louise Hay's Evidence</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-louiseHay"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="manlyPHall">
+                  <span class="acc-icon">📖</span>
+                  <span class="acc-title">Hall's Secret Archives</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-manlyPHall"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="gnm">
+                  <span class="acc-icon">🧬</span>
+                  <span class="acc-title">Biological Program — GNM</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-gnm"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="patterns">
+                  <span class="acc-icon">⚖️</span>
+                  <span class="acc-title">Body Pattern Analysis</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-patterns"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="ailments">
+                  <span class="acc-icon">🩺</span>
+                  <span class="acc-title">Known Ailments</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-ailments"></div>
+              </div>
+              
+              <div class="accordion-item">
+                <button class="accordion-header" data-section="playbook">
+                  <span class="acc-icon">💪</span>
+                  <span class="acc-title">SherlockFit Prescription</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-playbook"></div>
+              </div>
+              
+              <div class="accordion-item" id="personalNotesSection" style="display:none">
+                <button class="accordion-header" data-section="notes">
+                  <span class="acc-icon">📝</span>
+                  <span class="acc-title">My Case Notes</span>
+                  <i class="fas fa-chevron-down acc-arrow"></i>
+                </button>
+                <div class="accordion-body" id="section-notes"></div>
+              </div>
+              
+            </div><!-- end accordion -->
+            
+            <!-- Share buttons -->
+            <div class="share-bar">
+              <span class="share-label">Share this investigation:</span>
+              <button class="share-btn share-twitter" id="shareTwitter"><i class="fab fa-x-twitter"></i> Share</button>
+              <button class="share-btn share-facebook" id="shareFacebook"><i class="fab fa-facebook-f"></i> Share</button>
+              <button class="share-btn share-copy" id="shareCopy"><i class="fas fa-link"></i> Copy Link</button>
+            </div>
+            
+          </div><!-- end case-file-content -->
         </section>
-
-        <section id="chakra-system">
-            <h2>Chakra System Overlay</h2>
-            <div class="chakra" data-chakra="root">Root Chakra</div>
-            <div class="chakra" data-chakra="sacral">Sacral Chakra</div>
-            <div class="chakra" data-chakra="solar-plexus">Solar Plexus Chakra</div>
-            <div class="chakra" data-chakra="heart">Heart Chakra</div>
-            <div class="chakra" data-chakra="throat">Throat Chakra</div>
-            <div class="chakra" data-chakra="third-eye">Third Eye Chakra</div>
-            <div class="chakra" data-chakra="crown">Crown Chakra</div>
-        </section>
-
-        <section id="spiritual-wisdom">
-            <h2>Spiritual Wisdom</h2>
-            <p>Insights from Louise Hay, Traditional Chinese Medicine, Manly P. Hall, and German New Medicine.</p>
-            <ul>
-                <li>"You can heal your life." - Louise Hay</li>
-                <li>Traditional Chinese Medicine emphasizes harmony between body and mind.</li>
-                <li>Manly P. Hall teaches the power of consciousness.</li>
-                <li>German New Medicine connects emotions with physical health.</li>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 SherlockFit. All rights reserved.</p>
-        <div id="admin-panel">
-            <h2>Admin Panel</h2>
-            <button>Login</button>
+        
+      </div><!-- end oracle-layout -->
+    </div><!-- end view-oracle -->
+    
+    <!-- MY MAP VIEW -->
+    <div id="view-mymap" class="view">
+      <div class="mymap-container">
+        <h2 class="section-heading"><i class="fas fa-star"></i> Personal Healing Map</h2>
+        <p class="section-subtext">Track your investigation progress across all 36 body zones.</p>
+        
+        <div class="progress-bar-container">
+          <div class="progress-bar-label">
+            <span>Zones Investigated:</span>
+            <span id="progressCount">0 of 36</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill" style="width:0%"></div>
+          </div>
         </div>
-    </footer>
+        
+        <div class="zone-grid" id="zoneGrid"></div>
+        
+        <div class="map-actions">
+          <button class="btn btn-primary" id="exportMapBtn"><i class="fas fa-download"></i> Export My Map</button>
+          <button class="btn btn-secondary" id="importMapBtn"><i class="fas fa-upload"></i> Import Map</button>
+          <button class="btn btn-danger" id="clearMapBtn"><i class="fas fa-trash"></i> Clear All Notes</button>
+        </div>
+        <input type="file" id="importFileInput" accept=".json" style="display:none">
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- ADD CASE NOTE MODAL -->
+  <div class="modal-overlay" id="caseNoteModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-plus-circle"></i> Add Case Note</h3>
+        <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <label>Body Zone:</label>
+        <select id="noteZoneSelect" class="modal-input"></select>
+        <label>Note Type:</label>
+        <select id="noteTypeSelect" class="modal-input">
+          <option value="ailment">Ailment / Injury</option>
+          <option value="observation">Personal Observation</option>
+          <option value="healing">Healing Progress</option>
+          <option value="affirmation">Personal Affirmation</option>
+        </select>
+        <label>Your Note:</label>
+        <textarea id="noteText" class="modal-input" rows="4" placeholder="Describe your experience, symptom, or insight..."></textarea>
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="saveNoteBtn">Save to Case File</button>
+          <button class="btn btn-secondary" id="cancelNoteBtn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">SHERLOCKFIT</span>
+        <span class="footer-tagline">· BEYOND ELEMENTARY ·</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://my.playbookapp.io/sherlockfit" target="_blank" rel="noopener">Join Playbook <i class="fas fa-external-link-alt"></i></a>
+        <a href="admin.html">Admin</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 SherlockFit. All rights reserved.</p>
+      <p class="footer-credits">Oracle integrates: Chakra Tradition · Traditional Chinese Medicine · Louise Hay · Manly P. Hall · German New Medicine</p>
+    </div>
+  </footer>
+
+  <script src="body-data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
