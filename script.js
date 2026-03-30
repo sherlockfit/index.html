@@ -9,24 +9,25 @@ document.querySelectorAll('.body-zone').forEach(zone => {
     });
 });
 
-// Email capture functionality
-const emailCaptureForm = document.getElementById('email-capture');
-emailCaptureForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = e.target.email.value;
-    captureEmail(email);
-});
-
-// Function to capture email
-function captureEmail(email) {
-    // Logic to store email
-    console.log(`Email captured: ${email}`);
+// Show fallback SVG silhouette if Vitruvian Man image fails to load
+const vitruvianImg = document.getElementById('vitruvian-img');
+if (vitruvianImg) {
+    vitruvianImg.addEventListener('error', function() {
+        this.style.display = 'none';
+        const fallback = document.querySelector('.body-fallback');
+        if (fallback) {
+            fallback.style.display = 'flex';
+        }
+    });
 }
 
 // Admin panel functionality
-document.getElementById('admin-panel-toggle').addEventListener('click', function() {
-    document.getElementById('admin-panel').classList.toggle('visible');
-});
+const adminPanelToggle = document.getElementById('admin-panel-toggle');
+if (adminPanelToggle) {
+    adminPanelToggle.addEventListener('click', function() {
+        document.getElementById('admin-panel').classList.toggle('visible');
+    });
+}
 
 // Function to add custom ailments
 function addCustomAilment(ailment) {

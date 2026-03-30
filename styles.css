@@ -84,18 +84,58 @@ p {
 .body-map {
     position: relative;
     width: 100%;
-    height: 400px;
-    background-image: url('path/to/body-map-image.png'); /* Placeholder image path */
-    background-size: cover;
+    max-width: 500px;
+    margin: 0 auto;
+    background-image: url('vitruvian-man.png');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    min-height: 500px;
+    display: flex;
+    align-items: stretch;
 }
 
-.body-part {
+.vitruvian-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 500px;
+    object-fit: contain;
+}
+
+.body-fallback {
+    display: flex;
+    width: 100%;
+    max-height: 500px;
+    align-items: center;
+    justify-content: center;
+}
+
+.body-map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+}
+.body-zone {
     position: absolute;
     cursor: pointer;
-    transition: transform 0.2s;
+    background: rgba(124, 111, 170, 0.2);
+    border: 1px solid rgba(124, 111, 170, 0.5);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    transition: background 0.2s;
 }
 
-.body-part:hover {
-    transform: scale(1.05);
+.body-zone:hover,
+.body-zone.active {
+    background: rgba(124, 111, 170, 0.5);
+    border-color: #7c6faa;
 }

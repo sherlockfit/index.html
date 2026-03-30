@@ -10,23 +10,39 @@
 <body>
     <header>
         <h1>Vitruvian Man Body Oracle</h1>
-        <form id="email-capture">
-            <label for="email">Subscribe for updates:</label>
-            <input type="email" id="email" name="email" required>
-            <button type="submit">Submit</button>
-        </form>
     </header>
 
     <main>
         <section id="body-zones">
             <h2>Clickable Body Zones</h2>
-            <div class="body-zone" data-zone="head">Head</div>
-            <div class="body-zone" data-zone="heart">Heart</div>
-            <div class="body-zone" data-zone="lungs">Lungs</div>
-            <div class="body-zone" data-zone="liver">Liver</div>
-            <div class="body-zone" data-zone="stomach">Stomach</div>
-            <div class="body-zone" data-zone="legs">Legs</div>
-            <!-- Add additional body zones here -->
+            <div class="body-map">
+                <img src="vitruvian-man.png" alt="Vitruvian Man" class="vitruvian-img" id="vitruvian-img">
+                <svg class="body-fallback" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg"
+                     aria-label="Human body silhouette" style="display:none;">
+                    <!-- Head -->
+                    <circle cx="100" cy="35" r="28" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                    <!-- Neck -->
+                    <rect x="90" y="63" width="20" height="18" rx="4" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                    <!-- Torso -->
+                    <rect x="60" y="81" width="80" height="110" rx="10" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                    <!-- Left arm -->
+                    <rect x="22" y="85" width="36" height="100" rx="12" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                    <!-- Right arm -->
+                    <rect x="142" y="85" width="36" height="100" rx="12" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                    <!-- Left leg -->
+                    <rect x="62" y="191" width="34" height="145" rx="14" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                    <!-- Right leg -->
+                    <rect x="104" y="191" width="34" height="145" rx="14" fill="none" stroke="#7c6faa" stroke-width="2.5"/>
+                </svg>
+                <div class="body-map-overlay">
+                    <div class="body-zone" data-zone="head" style="top:2%;left:38%;width:24%;height:14%;">Head</div>
+                    <div class="body-zone" data-zone="heart" style="top:27%;left:42%;width:22%;height:12%;">Heart</div>
+                    <div class="body-zone" data-zone="lungs" style="top:23%;left:28%;width:44%;height:14%;">Lungs</div>
+                    <div class="body-zone" data-zone="stomach" style="top:38%;left:35%;width:30%;height:12%;">Stomach</div>
+                    <div class="body-zone" data-zone="liver" style="top:35%;left:50%;width:20%;height:10%;">Liver</div>
+                    <div class="body-zone" data-zone="legs" style="top:65%;left:30%;width:40%;height:25%;">Legs</div>
+                </div>
+            </div>
         </section>
 
         <section id="chakra-system">
