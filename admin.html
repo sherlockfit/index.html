@@ -3,25 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Interface</title>
+    <title>Admin — SherlockFit Body Oracle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container { max-width: 900px; margin: 2rem auto; padding: 0 2rem; }
+        .admin-card {
+            background: white; border: 1px solid var(--parchment-edge);
+            border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .admin-card h2 {
+            font-family: 'Playfair Display', serif; color: var(--sepia);
+            margin: 0 0 0.5rem; font-size: 1.35rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .admin-card p { color: var(--sepia-light); font-size: 0.9rem; margin: 0 0 1rem; line-height: 1.6; }
+        .admin-card h3 {
+            font-family: 'Lato', sans-serif; font-size: 0.95rem;
+            color: var(--sf-chrome-dark); margin: 1.25rem 0 0.5rem;
+            font-weight: 700;
+        }
+        .admin-card ol, .admin-card ul { padding-left: 1.25rem; margin: 0 0 1rem; color: var(--sepia); font-size: 0.9rem; }
+        .admin-card ol { list-style: decimal; }
+        .admin-card ul { list-style: disc; }
+        .admin-card li { margin-bottom: 0.4rem; line-height: 1.5; }
+        .code-block {
+            position: relative; background: var(--navy); color: #e8e8e8;
+            padding: 1rem 1.25rem; border-radius: 6px; font-family: 'Courier New', monospace;
+            font-size: 0.8rem; line-height: 1.6; overflow-x: auto;
+            white-space: pre; margin: 0.75rem 0 1rem;
+        }
+        .copy-btn {
+            position: absolute; top: 0.5rem; right: 0.5rem;
+            background: var(--sf-chrome-blue); color: white; border: none;
+            padding: 0.3rem 0.7rem; border-radius: 4px; cursor: pointer;
+            font-size: 0.75rem; font-family: 'Lato', sans-serif; font-weight: 700;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover { background: var(--sf-chrome-light); }
+        .step-number {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--sf-chrome-blue); color: white;
+            font-size: 0.75rem; font-weight: 700; margin-right: 0.25rem;
+            flex-shrink: 0;
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            color: var(--sf-chrome-blue); font-size: 0.9rem;
+            margin-bottom: 1.5rem; text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .preview-frame {
+            width: 100%; height: 400px; border: 2px solid var(--parchment-edge);
+            border-radius: 6px; margin: 1rem 0;
+        }
+        .url-highlight {
+            background: rgba(74,144,217,0.1); border: 1px solid rgba(74,144,217,0.3);
+            padding: 0.4rem 0.75rem; border-radius: 4px; font-family: 'Courier New', monospace;
+            font-size: 0.85rem; color: var(--sf-chrome-dark); display: inline-block;
+            word-break: break-all;
+        }
+        .tip-box {
+            background: linear-gradient(135deg, #f0f7ff, #e8f4fd); border-left: 3px solid var(--sf-chrome-blue);
+            padding: 0.75rem 1rem; border-radius: 0 4px 4px 0; margin: 0.75rem 0;
+            font-size: 0.85rem; color: var(--sepia);
+        }
+        .tip-box strong { color: var(--sf-chrome-dark); }
+        .admin-header {
+            text-align: center; padding: 1.5rem 0;
+            border-bottom: 2px solid var(--sf-chrome-blue); margin-bottom: 2rem;
+        }
+        .admin-header h1 {
+            font-family: 'Playfair Display', serif; font-size: 1.75rem;
+            color: var(--sepia); margin: 0;
+        }
+        .admin-header .tagline {
+            color: var(--sf-chrome-blue); margin: 0.25rem 0 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Admin Interface</h1>
-    <section>
-        <h2>Add/Edit Ailments</h2>
-        <form id="ailmentForm">
-            <input type="text" id="ailmentName" placeholder="Ailment Name" required>
-            <textarea id="ailmentDescription" placeholder="Description" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
-    <section>
-        <h2>Add/Edit Spiritual Meanings</h2>
-        <form id="spiritualMeaningForm">
-            <input type="text" id="spiritualMeaningName" placeholder="Spiritual Meaning" required>
-            <textarea id="spiritualMeaningDescription" placeholder="Description" required></textarea>
-            <button type="submit">Submit</button>
-        </form>
-    </section>
+    <div class="admin-container">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Body Oracle</a>
+
+        <div class="admin-header">
+            <h1><i class="fas fa-cog"></i> Admin &amp; Integration</h1>
+            <p class="tagline">SHERLOCKFIT · BEYOND ELEMENTARY</p>
+        </div>
+
+        <!-- SQUARESPACE EMBED GUIDE -->
+        <div class="admin-card">
+            <h2><i class="fas fa-plug"></i> Squarespace Integration</h2>
+            <p>Embed the interactive Body Oracle directly into any Squarespace page using one of the methods below. The embed version loads without the site header and footer, fitting cleanly inside your Squarespace layout.</p>
+
+            <h3><span class="step-number">1</span> Quick Embed — Code Block (Recommended)</h3>
+            <p>This is the simplest approach. It loads the Body Oracle inside an iframe on your Squarespace page.</p>
+            <ol>
+                <li>In your Squarespace editor, click <strong>+ Add Block</strong> → <strong>Code</strong></li>
+                <li>Paste the embed code below into the code block</li>
+                <li>Make sure the <strong>"Display Source"</strong> toggle is <strong>OFF</strong></li>
+                <li>Click <strong>Save</strong> and preview your page</li>
+            </ol>
+            <div class="code-block" id="embedCode1">&lt;iframe
+  src="https://sherlockfit.github.io/index.html/embed.html"
+  width="100%"
+  height="900"
+  style="border:none; border-radius:8px; max-width:1400px;"
+  title="SherlockFit Body Oracle"
+  loading="lazy"
+  allow="clipboard-write"&gt;
+&lt;/iframe&gt;<button class="copy-btn" data-copy="embedCode1"><i class="fas fa-copy"></i> Copy</button></div>
+
+            <div class="tip-box">
+                <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Adjust the <code>height="900"</code> value to fit your page design. For mobile-friendly layouts, try <code>height="1200"</code>.
+            </div>
+
+            <h3><span class="step-number">2</span> Deep Link to a Specific Zone</h3>
+            <p>You can link directly to a specific body zone using the <code>?zone=</code> parameter. This is great for blog posts or pages about a specific body area.</p>
+            <div class="code-block" id="embedCode2">&lt;iframe
+  src="https://sherlockfit.github.io/index.html/embed.html?zone=heart"
+  width="100%"
+  height="900"
+  style="border:none; border-radius:8px; max-width:1400px;"
+  title="SherlockFit Body Oracle — Heart"
+  loading="lazy"
+  allow="clipboard-write"&gt;
+&lt;/iframe&gt;<button class="copy-btn" data-copy="embedCode2"><i class="fas fa-copy"></i> Copy</button></div>
+
+            <p>Available zone names for deep linking:</p>
+            <div class="code-block" id="zoneNames">crown, thirdEye, eyes, ears, nose, jaw, throat, neck,
+shoulders, collarbone, chest, heart, ribcage, solarPlexus,
+back, spine, belly, sacral, pelvis,
+arms, elbows, wrists, hands,
+root, hips, thighs, legs, knees, ankles, feet,
+lungs, stomach, liver, kidneys, intestines, skin<button class="copy-btn" data-copy="zoneNames"><i class="fas fa-copy"></i> Copy</button></div>
+
+            <h3><span class="step-number">3</span> Simple Link Button</h3>
+            <p>If you prefer to link visitors to the full Body Oracle page instead of embedding, add a button in Squarespace that links to:</p>
+            <p class="url-highlight">https://sherlockfit.github.io/index.html/</p>
+            <p>In Squarespace: <strong>Add Block</strong> → <strong>Button</strong> → set the URL above as the link destination and choose <strong>"Open in new tab"</strong>.</p>
+
+            <h3><span class="step-number">4</span> Squarespace Code Injection (Site-wide)</h3>
+            <p>To add the Body Oracle to your site header or footer across all pages:</p>
+            <ol>
+                <li>Go to <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Code Injection</strong></li>
+                <li>Paste the iframe code from Step 1 into the <strong>Footer</strong> field</li>
+                <li>Click <strong>Save</strong></li>
+            </ol>
+
+            <div class="tip-box">
+                <strong><i class="fas fa-lightbulb"></i> Tip:</strong> The embed page works on any website platform that supports HTML — not just Squarespace. Use the same iframe code on WordPress, Wix, or any custom site.
+            </div>
+        </div>
+
+        <!-- EMBED PREVIEW -->
+        <div class="admin-card">
+            <h2><i class="fas fa-eye"></i> Embed Preview</h2>
+            <p>This is how the Body Oracle looks when embedded via iframe. Click any body zone to test the interactive features.</p>
+            <iframe src="embed.html" class="preview-frame" title="Embed Preview" loading="lazy" allow="clipboard-write"></iframe>
+        </div>
+
+        <!-- EXISTING ADMIN FORMS -->
+        <div class="admin-card">
+            <h2><i class="fas fa-edit"></i> Add / Edit Ailments</h2>
+            <form id="ailmentForm">
+                <label>Ailment Name:</label>
+                <input type="text" id="ailmentName" class="modal-input" placeholder="Ailment Name" required>
+                <label>Description:</label>
+                <textarea id="ailmentDescription" class="modal-input" rows="4" placeholder="Description" required></textarea>
+                <div style="margin-top:0.75rem">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h2><i class="fas fa-edit"></i> Add / Edit Spiritual Meanings</h2>
+            <form id="spiritualMeaningForm">
+                <label>Spiritual Meaning:</label>
+                <input type="text" id="spiritualMeaningName" class="modal-input" placeholder="Spiritual Meaning" required>
+                <label>Description:</label>
+                <textarea id="spiritualMeaningDescription" class="modal-input" rows="4" placeholder="Description" required></textarea>
+                <div style="margin-top:0.75rem">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+    (function () {
+        "use strict";
+        document.querySelectorAll(".copy-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                var targetId = this.getAttribute("data-copy");
+                var el = document.getElementById(targetId);
+                if (!el) return;
+                var text = el.textContent.replace(/ Copy$/, "").trim();
+                if (navigator.clipboard) {
+                    var self = this;
+                    navigator.clipboard.writeText(text).then(function () {
+                        self.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        setTimeout(function () {
+                            self.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                        }, 2000);
+                    });
+                }
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
