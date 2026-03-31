@@ -205,7 +205,10 @@ lungs, stomach, liver, kidneys, intestines, skin<button class="copy-btn" data-co
                 var targetId = this.getAttribute("data-copy");
                 var el = document.getElementById(targetId);
                 if (!el) return;
-                var text = el.textContent.replace(/ Copy$/, "").trim();
+                var clone = el.cloneNode(true);
+                var btns = clone.querySelectorAll(".copy-btn");
+                btns.forEach(function (b) { b.remove(); });
+                var text = clone.textContent.trim();
                 if (navigator.clipboard) {
                     var self = this;
                     navigator.clipboard.writeText(text).then(function () {
