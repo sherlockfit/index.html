@@ -235,6 +235,36 @@ lungs, stomach, liver, kidneys, intestines, skin<button class="copy-btn" data-co
     <script>
     (function () {
         "use strict";
+
+        function fallbackCopy(text) {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            ta.style.top = "-9999px";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            var ok = false;
+            try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+            document.body.removeChild(ta);
+            return ok;
+        }
+
+        function showCopied(btn) {
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(function () {
+                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            }, 2000);
+        }
+
+        function showFailed(btn) {
+            btn.innerHTML = '<i class="fas fa-times"></i> Failed';
+            setTimeout(function () {
+                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            }, 2000);
+        }
+
         document.querySelectorAll(".copy-btn").forEach(function (btn) {
             btn.addEventListener("click", function () {
                 var targetId = this.getAttribute("data-copy");
@@ -244,14 +274,18 @@ lungs, stomach, liver, kidneys, intestines, skin<button class="copy-btn" data-co
                 var btns = clone.querySelectorAll(".copy-btn");
                 btns.forEach(function (b) { b.remove(); });
                 var text = clone.textContent.trim();
-                if (navigator.clipboard) {
-                    var self = this;
-                    navigator.clipboard.writeText(text).then(function () {
-                        self.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        setTimeout(function () {
-                            self.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                        }, 2000);
-                    });
+                var self = this;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(
+                        function () { showCopied(self); },
+                        function () {
+                            if (fallbackCopy(text)) { showCopied(self); }
+                            else { showFailed(self); }
+                        }
+                    );
+                } else {
+                    if (fallbackCopy(text)) { showCopied(self); }
+                    else { showFailed(self); }
                 }
             });
         });
