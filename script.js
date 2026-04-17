@@ -9,22 +9,46 @@
 
   // ── State ──────────────────────────────────────────────────
   var currentZone = null;
-  var STORAGE_KEY = "sherlockfit_notes";
-  var EXPLORED_KEY = "sherlockfit_explored";
+  var NOTES_BASE = "sherlockfit_notes";
+  var EXPLORED_BASE = "sherlockfit_explored";
+
+  // Per-user storage keys. When signed out, notes/explored fall back to the
+  // base key so public browsing (no account) still remembers the last
+  // explored zone within the current tab, but save/export/etc. are gated.
+  function notesKey() {
+    return (window.SFAuth && window.SFAuth.userKey) ? window.SFAuth.userKey(NOTES_BASE) : NOTES_BASE;
+  }
+  function exploredKey() {
+    return (window.SFAuth && window.SFAuth.userKey) ? window.SFAuth.userKey(EXPLORED_BASE) : EXPLORED_BASE;
+  }
 
   function loadNotes() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    try { return JSON.parse(localStorage.getItem(notesKey())) || {}; }
     catch (e) { console.warn("Failed to parse saved notes:", e); return {}; }
   }
   function saveNotes(notes) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    localStorage.setItem(notesKey(), JSON.stringify(notes));
   }
   function loadExplored() {
-    try { return JSON.parse(localStorage.getItem(EXPLORED_KEY)) || []; }
+    try { return JSON.parse(localStorage.getItem(exploredKey())) || []; }
     catch (e) { console.warn("Failed to parse explored data:", e); return []; }
   }
   function saveExplored(list) {
-    localStorage.setItem(EXPLORED_KEY, JSON.stringify(list));
+    localStorage.setItem(exploredKey(), JSON.stringify(list));
+  }
+
+  // ── Auth gating helpers ────────────────────────────────────
+  function isAuthed() {
+    return !!(window.SFAuth && window.SFAuth.isSignedIn && window.SFAuth.isSignedIn());
+  }
+  function gate(reason, action) {
+    if (isAuthed()) { action(); return; }
+    if (window.SFAuth && window.SFAuth.requireAuth) {
+      window.SFAuth.requireAuth(reason, action);
+    } else {
+      // Fallback if auth.js failed to load — do not silently permit the action.
+      alert("Please sign in to continue.");
+    }
   }
 
   // ── Helpers ────────────────────────────────────────────────
@@ -37,16 +61,25 @@
   function $(id) { return document.getElementById(id); }
 
   // ── View switching ─────────────────────────────────────────
+  function activateView(view) {
+    document.querySelectorAll(".nav-btn[data-view]").forEach(function (b) { b.classList.remove("active"); });
+    var btn = document.querySelector('.nav-btn[data-view="' + view + '"]');
+    if (btn) btn.classList.add("active");
+    document.querySelectorAll(".view").forEach(function (v) { v.classList.remove("active"); });
+    var target = $("view-" + view);
+    if (target) target.classList.add("active");
+    if (view === "mymap") refreshMyMap();
+  }
+
   function initViews() {
     document.querySelectorAll(".nav-btn[data-view]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var view = this.getAttribute("data-view");
-        document.querySelectorAll(".nav-btn[data-view]").forEach(function (b) { b.classList.remove("active"); });
-        this.classList.add("active");
-        document.querySelectorAll(".view").forEach(function (v) { v.classList.remove("active"); });
-        var target = $("view-" + view);
-        if (target) target.classList.add("active");
-        if (view === "mymap") refreshMyMap();
+        if (view === "mymap") {
+          gate("Create a free account to build and save your personal Body Map.", function () { activateView("mymap"); });
+          return;
+        }
+        activateView(view);
       });
     });
   }
@@ -348,7 +381,9 @@
     function closeModal() { modal.classList.remove("open"); }
 
     var addBtn = $("addNoteBtn");
-    if (addBtn) addBtn.addEventListener("click", openModal);
+    if (addBtn) addBtn.addEventListener("click", function () {
+      gate("Create a free account to save case notes to your personal Body Map.", openModal);
+    });
     var closeBtn = $("modalClose");
     if (closeBtn) closeBtn.addEventListener("click", closeModal);
     var cancelBtn = $("cancelNoteBtn");
@@ -461,13 +496,7 @@
     grid.querySelectorAll("[data-zone-card]").forEach(function (card) {
       card.addEventListener("click", function () {
         var key = this.getAttribute("data-zone-card");
-        // switch to oracle view
-        document.querySelectorAll(".nav-btn[data-view]").forEach(function (b) { b.classList.remove("active"); });
-        var oracleBtn = document.querySelector('.nav-btn[data-view="oracle"]');
-        if (oracleBtn) oracleBtn.classList.add("active");
-        document.querySelectorAll(".view").forEach(function (v) { v.classList.remove("active"); });
-        var oracleView = $("view-oracle");
-        if (oracleView) oracleView.classList.add("active");
+        activateView("oracle");
         selectZone(key);
       });
     });
@@ -482,28 +511,34 @@
 
     if (exportBtn) {
       exportBtn.addEventListener("click", function () {
-        var data = {
-          notes: loadNotes(),
-          explored: loadExplored(),
-          exportDate: new Date().toISOString()
-        };
-        var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = "sherlockfit-map-" + new Date().toISOString().slice(0, 10) + ".json";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        gate("Create a free account to export your Body Map.", function () {
+          var data = {
+            user: window.SFAuth && window.SFAuth.currentUser ? window.SFAuth.currentUser() : null,
+            notes: loadNotes(),
+            explored: loadExplored(),
+            exportDate: new Date().toISOString()
+          };
+          var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "sherlockfit-map-" + new Date().toISOString().slice(0, 10) + ".json";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
       });
     }
 
     if (importBtn && fileInput) {
-      importBtn.addEventListener("click", function () { fileInput.click(); });
+      importBtn.addEventListener("click", function () {
+        gate("Sign in to import a Body Map into your account.", function () { fileInput.click(); });
+      });
       fileInput.addEventListener("change", function () {
         var file = this.files[0];
         if (!file) return;
+        if (!isAuthed()) { this.value = ""; return; }
         var reader = new FileReader();
         reader.onload = function (e) {
           try {
@@ -523,15 +558,56 @@
 
     if (clearBtn) {
       clearBtn.addEventListener("click", function () {
-        if (confirm("Clear all notes and progress? This cannot be undone.")) {
-          localStorage.removeItem(STORAGE_KEY);
-          localStorage.removeItem(EXPLORED_KEY);
-          refreshMyMap();
-        }
+        gate("Sign in to manage your Body Map.", function () {
+          if (confirm("Clear all notes and progress? This cannot be undone.")) {
+            localStorage.removeItem(notesKey());
+            localStorage.removeItem(exploredKey());
+            refreshMyMap();
+          }
+        });
       });
     }
   }
 
+  // ── Account controls (sign in / sign out / status) ─────────
+  function initAccountControls() {
+    var signInBtn = $("signInBtn");
+    var signOutBtn = $("signOutBtn");
+    var statusEl = $("accountStatus");
+
+    function render() {
+      var user = window.SFAuth && window.SFAuth.currentUser ? window.SFAuth.currentUser() : null;
+      if (user) {
+        if (signInBtn) signInBtn.style.display = "none";
+        if (signOutBtn) signOutBtn.style.display = "";
+        if (statusEl) statusEl.textContent = "Signed in as " + user;
+      } else {
+        if (signInBtn) signInBtn.style.display = "";
+        if (signOutBtn) signOutBtn.style.display = "none";
+        if (statusEl) statusEl.textContent = "";
+      }
+    }
+
+    if (signInBtn && window.SFAuth) {
+      signInBtn.addEventListener("click", function () { window.SFAuth.openSignIn(); });
+    }
+    if (signOutBtn && window.SFAuth) {
+      signOutBtn.addEventListener("click", function () {
+        window.SFAuth.signOut();
+        // If the user was viewing My Map, bounce them back to the public Body Map.
+        var mymap = $("view-mymap");
+        if (mymap && mymap.classList.contains("active")) activateView("oracle");
+      });
+    }
+    if (window.SFAuth && window.SFAuth.onChange) {
+      window.SFAuth.onChange(function () {
+        render();
+        // Refresh My Map so it reflects the newly-active account's data.
+        if ($("view-mymap") && $("view-mymap").classList.contains("active")) refreshMyMap();
+      });
+    }
+    render();
+  }
   // ── Deep link support ──────────────────────────────────────
   function checkDeepLink() {
     var params = new URLSearchParams(window.location.search);
@@ -550,6 +626,7 @@
     initModal();
     initShare();
     initMapActions();
+    initAccountControls();
     checkDeepLink();
   });
 })();

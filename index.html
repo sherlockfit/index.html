@@ -12,27 +12,22 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo-area">
-        <img src="sherlockfit-logo.png" alt="SherlockFit" class="site-logo" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block'">
-        <span id="logo-text" class="logo-text-fallback" style="display:none">SHERLOCKFIT</span>
-      </div>
-      <div class="header-title">
-        <h1>Vitruvian Man Body Oracle</h1>
-        <p class="tagline">BEYOND ELEMENTARY</p>
-      </div>
-      <nav class="header-nav">
+  <!-- MAIN CONTENT -->
+  <main class="oracle-main">
+    <!-- Lightweight sub-nav (replaces the old black site header so this page
+         can be embedded beneath an existing site header without doubling up). -->
+    <nav class="oracle-subnav" aria-label="Oracle views">
+      <div class="subnav-views">
         <button class="nav-btn active" data-view="oracle"><i class="fas fa-map"></i> Body Map</button>
         <button class="nav-btn" data-view="mymap"><i class="fas fa-star"></i> My Map</button>
         <a href="admin.html" class="nav-btn"><i class="fas fa-cog"></i> Admin</a>
-      </nav>
-    </div>
-  </header>
-
-  <!-- MAIN CONTENT -->
-  <main class="oracle-main">
+      </div>
+      <div class="subnav-account" id="accountControls">
+        <span class="account-status" id="accountStatus" aria-live="polite"></span>
+        <button class="nav-btn" id="signInBtn"><i class="fas fa-user"></i> Sign In</button>
+        <button class="nav-btn" id="signOutBtn" style="display:none"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+      </div>
+    </nav>
     
     <!-- BODY MAP VIEW -->
     <div id="view-oracle" class="view active">
@@ -319,6 +314,7 @@
   </footer>
 
   <script src="body-data.js"></script>
+  <script src="auth.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

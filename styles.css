@@ -50,41 +50,56 @@ img { max-width: 100%; display: block; }
 ul, ol { list-style: none; }
 button { font-family: 'Lato', sans-serif; }
 
-/* SITE HEADER */
-.site-header {
-  background: linear-gradient(135deg, #1A1A2E 0%, #2C2C2C 100%);
-  padding: 1rem 2rem;
-  border-bottom: 3px solid var(--sf-chrome-blue);
-  position: sticky; top: 0; z-index: 100;
+/* SITE HEADER — removed.
+   The old dark `.site-header` was deleted so this page can be embedded
+   beneath an existing site header (e.g. Squarespace). The replacement
+   lives in `.oracle-subnav` below. */
+
+
+/* ORACLE SUB-NAV (lightweight; replaces the old dark site header so this
+   page can be embedded under the customer's existing site header). */
+.oracle-subnav {
+  max-width: 1400px;
+  margin: 1rem auto 0;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
-.header-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  max-width: 1400px; margin: 0 auto;
+.subnav-views, .subnav-account {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
-.site-logo { max-height: 50px; width: auto; }
-.logo-text-fallback {
-  color: var(--sf-chrome-blue); font-family: 'Playfair Display', serif;
-  font-size: 1.5rem; font-weight: 700; letter-spacing: 0.2em;
+.oracle-subnav .nav-btn {
+  background: transparent;
+  color: var(--sf-chrome-dark);
+  border: 1px solid var(--parchment-edge);
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
 }
-.header-title-group h1 {
-  color: white; font-family: 'Playfair Display', serif;
-  font-size: 1.8rem; margin: 0;
-}
-.tagline {
-  color: var(--sf-chrome-light); font-size: 0.75rem;
-  letter-spacing: 0.3em; text-transform: uppercase; margin: 0;
-}
-.header-nav { display: flex; gap: 0.5rem; }
-.nav-btn {
-  background: transparent; color: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem;
-  border-radius: 4px; cursor: pointer; font-family: 'Lato', sans-serif;
-  font-size: 0.875rem; text-decoration: none; display: inline-flex;
-  align-items: center; gap: 0.4rem; transition: all 0.2s;
-}
-.nav-btn:hover, .nav-btn.active {
-  background: var(--sf-chrome-blue); color: white;
+.oracle-subnav .nav-btn:hover,
+.oracle-subnav .nav-btn.active {
+  background: var(--sf-chrome-blue);
+  color: white;
   border-color: var(--sf-chrome-blue);
+  text-decoration: none;
+}
+.account-status {
+  font-size: 0.8rem;
+  color: var(--sepia-light);
+  font-style: italic;
 }
 
 /* MAIN LAYOUT */
@@ -399,9 +414,8 @@ button { font-family: 'Lato', sans-serif; }
 @media (max-width: 768px) {
   .oracle-layout { grid-template-columns: 1fr; flex-direction: column; }
   .body-map-container { padding-bottom: 100%; }
-  .site-header .header-inner { flex-direction: column; gap: 1rem; text-align: center; }
-  .header-nav { flex-wrap: wrap; justify-content: center; }
-  .header-title-group h1 { font-size: 1.4rem; }
+  .oracle-subnav { flex-direction: column; align-items: stretch; padding: 0 1rem; }
+  .subnav-views, .subnav-account { justify-content: center; }
   .oracle-main { padding: 1rem; }
   .mymap-container { padding: 1rem; }
   .zone-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
@@ -421,4 +435,69 @@ button { font-family: 'Lato', sans-serif; }
   .accordion-body { padding: 0 1rem 1rem; }
   .zone-title-bar { padding: 0.75rem 1rem; }
   .zone-anatomy { padding: 0.4rem 1rem 0.75rem; }
+}
+
+/* AUTH MODAL */
+.auth-modal .modal-box { max-width: 420px; width: 95vw; }
+.auth-reason {
+  font-size: 0.9rem;
+  color: var(--sepia-light);
+  margin: 0 0 0.25rem;
+  line-height: 1.5;
+}
+.auth-tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--parchment-edge);
+  margin-bottom: 0.25rem;
+}
+.auth-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  color: var(--sepia-light);
+  transition: all 0.2s;
+}
+.auth-tab:hover { color: var(--sf-chrome-dark); }
+.auth-tab.active {
+  color: var(--sf-chrome-dark);
+  border-bottom-color: var(--sf-chrome-blue);
+  font-weight: 700;
+}
+#authForm { display: flex; flex-direction: column; gap: 0.75rem; }
+#authForm label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--sepia);
+  margin-bottom: -0.5rem;
+}
+.auth-remember {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400 !important;
+  font-size: 0.85rem;
+  color: var(--sepia-light);
+  margin-bottom: 0 !important;
+  cursor: pointer;
+}
+.auth-remember input { margin: 0; }
+.auth-error {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin: 0;
+  min-height: 1em;
+}
+.auth-error:empty { display: none; }
+.auth-note {
+  font-size: 0.75rem;
+  color: var(--sepia-light);
+  font-style: italic;
+  margin: 0.5rem 0 0;
+  line-height: 1.4;
 }
