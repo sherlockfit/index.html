@@ -11,24 +11,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <style>
-    /* Embed overrides — remove header/footer chrome for iframe use */
+    /* Embed overrides — remove header/footer chrome for iframe use.
+       The embedding site already provides its own header/branding, so we
+       show only the Oracle itself here (no title banner). */
     body { background: var(--parchment); min-height: auto; }
-    .site-header, .site-footer, .header-nav { display: none !important; }
+    .site-header, .site-footer, .header-nav, .oracle-subnav { display: none !important; }
     .oracle-main { padding: 0.75rem; max-width: 100%; }
-    .embed-header {
-      text-align: center; padding: 0.75rem 1rem 0;
-      border-bottom: 2px solid var(--sf-chrome-blue);
-      margin-bottom: 0.75rem; background: white;
-      border-radius: 8px 8px 0 0;
-    }
-    .embed-header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem; color: var(--sepia); margin: 0;
-    }
-    .embed-header .tagline {
-      font-size: 0.65rem; letter-spacing: 0.25em;
-      color: var(--sf-chrome-blue); margin: 0 0 0.5rem;
-    }
     /* Tighten layout for embed */
     .oracle-layout { gap: 0.75rem; }
     .body-map-panel { border-radius: 6px; }
@@ -47,12 +35,6 @@
   </style>
 </head>
 <body>
-  <!-- Minimal embed header (replaces full site header) -->
-  <div class="embed-header">
-    <h1>Vitruvian Man Body Oracle</h1>
-    <p class="tagline">SHERLOCKFIT · BEYOND ELEMENTARY</p>
-  </div>
-
   <main class="oracle-main">
     <!-- BODY MAP VIEW (only oracle view in embed) -->
     <div id="view-oracle" class="view active">
