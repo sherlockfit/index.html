@@ -195,9 +195,9 @@
     };
     Object.keys(legacyMap).forEach(function (legacy) {
       var value = localStorage.getItem(legacy);
-      if (value == null) return;
+      if (value === null) return;
       // Only migrate if the target slot is empty (don't clobber a returning user).
-      if (localStorage.getItem(legacyMap[legacy]) == null) {
+      if (localStorage.getItem(legacyMap[legacy]) === null) {
         localStorage.setItem(legacyMap[legacy], value);
       }
       localStorage.removeItem(legacy);

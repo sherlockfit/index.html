@@ -538,7 +538,6 @@
       fileInput.addEventListener("change", function () {
         var file = this.files[0];
         if (!file) return;
-        if (!isAuthed()) { this.value = ""; return; }
         var reader = new FileReader();
         reader.onload = function (e) {
           try {
