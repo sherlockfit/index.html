@@ -572,7 +572,8 @@
     }
 
     function validateEmail(value) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+      // Require: local-part @ domain . TLD (TLD must be at least 2 chars)
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
     }
 
     form.addEventListener("submit", function (e) {
@@ -616,13 +617,13 @@
             });
           }
         })
-        .catch(function () {
+        .catch(function (err) {
           submitBtn.disabled = false;
           submitBtn.querySelector("span").textContent = "Join the waitlist";
-          setFeedback(
-            '<i class="fas fa-exclamation-triangle"></i> Something went wrong. Please try again in a moment.',
-            "error"
-          );
+          var msg = (err && err.message && err.message !== "Server error")
+            ? err.message
+            : "Something went wrong. Please try again in a moment.";
+          setFeedback('<i class="fas fa-exclamation-triangle"></i> ' + msg, "error");
         });
     });
 
