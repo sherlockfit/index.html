@@ -553,3 +553,87 @@
     checkDeepLink();
   });
 })();
+/* ============================================================
+   Waitlist signup — Oracle v2
+   ============================================================ */
+(function () {
+  "use strict";
+
+  function initWaitlist() {
+    var form = document.getElementById("waitlistForm");
+    var emailInput = document.getElementById("waitlistEmail");
+    var submitBtn = document.getElementById("waitlistSubmitBtn");
+    var feedback = document.getElementById("waitlistFeedback");
+
+    if (!form || !emailInput || !submitBtn || !feedback) return;
+
+    function setFeedback(html, type) {
+      feedback.innerHTML = '<div class="waitlist-' + type + '">' + html + '</div>';
+    }
+
+    function validateEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var email = emailInput.value.trim();
+
+      // Client-side validation
+      if (!validateEmail(email)) {
+        emailInput.classList.add("input-error");
+        emailInput.focus();
+        setFeedback('<i class="fas fa-exclamation-circle"></i> Please enter a valid email address.', "error");
+        return;
+      }
+      emailInput.classList.remove("input-error");
+      feedback.innerHTML = "";
+
+      // Disable form while submitting
+      submitBtn.disabled = true;
+      submitBtn.querySelector("span").textContent = "Joining\u2026";
+
+      var formData = new FormData(form);
+
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      })
+        .then(function (res) {
+          if (res.ok) {
+            // Success: replace the form with a thank-you message
+            form.style.display = "none";
+            setFeedback(
+              "<strong>\uD83C\uDF89 You\u2019re on the list!</strong>" +
+              "We\u2019ll let you know as soon as Oracle 2.0 is ready. Stay sharp.",
+              "success"
+            );
+          } else {
+            return res.json().then(function (data) {
+              throw new Error((data && data.error) || "Server error");
+            });
+          }
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.querySelector("span").textContent = "Join the waitlist";
+          setFeedback(
+            '<i class="fas fa-exclamation-triangle"></i> Something went wrong. Please try again in a moment.',
+            "error"
+          );
+        });
+    });
+
+    // Clear error state on input
+    emailInput.addEventListener("input", function () {
+      emailInput.classList.remove("input-error");
+      if (feedback.querySelector(".waitlist-error")) {
+        feedback.innerHTML = "";
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initWaitlist);
+})();
