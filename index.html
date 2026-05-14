@@ -302,6 +302,57 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       WAITLIST SECTION — SherlockFit Oracle 2.0
+       ============================================================
+       To activate form submissions:
+         1. Create a free account at https://formspree.io
+         2. Create a new form and copy your form ID
+         3. Replace REPLACE_WITH_FORM_ID below with your actual form ID
+            e.g. https://formspree.io/f/xabc1234
+         4. (Optional) Keep or update the hidden _subject field value
+       ============================================================ -->
+  <section class="waitlist-section" aria-label="Join the SherlockFit Oracle 2.0 waitlist">
+    <div class="waitlist-inner">
+      <div class="waitlist-badge"><i class="fas fa-flask"></i> Coming Soon</div>
+      <h2 class="waitlist-heading">SherlockFit Oracle 2.0 — Coming Soon</h2>
+      <p class="waitlist-sub">
+        The next evolution of the Oracle is in development: a mobile-first app experience with saved charts,
+        a 3D body explorer, multiple healing methodologies, and personalized reading history — all in one place.
+      </p>
+
+      <form class="waitlist-form" id="waitlistForm"
+            action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
+            method="POST"
+            novalidate>
+        <!-- Optional: set email subject in Formspree dashboard or keep this hidden field -->
+        <input type="hidden" name="_subject" value="V2 waitlist signup">
+        <div class="waitlist-input-row">
+          <label for="waitlistEmail" class="sr-only">Email address</label>
+          <input
+            type="email"
+            id="waitlistEmail"
+            name="email"
+            class="waitlist-email-input"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="btn waitlist-submit-btn" id="waitlistSubmitBtn">
+            <i class="fas fa-paper-plane"></i>
+            <span>Join the waitlist</span>
+          </button>
+        </div>
+        <p class="waitlist-privacy">
+          <i class="fas fa-lock"></i>
+          We'll only email you about the v2 launch. Unsubscribe anytime.
+        </p>
+      </form>
+
+      <div class="waitlist-feedback" id="waitlistFeedback" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-inner">
